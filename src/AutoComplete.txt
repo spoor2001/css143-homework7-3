@@ -1,0 +1,69 @@
+Autocomplete search Algorithm used:
+
+
+
+I am  using inverted indexes algorithm.
+
+working of choosen algo:
+passed array = ("hello", "high", "seattle", "seatac", "see", "hollow", "how", "spoorthi");
+index = 
+ {
+	a=[[], [], [2], [2, 4], [], [], [], []], 
+	c=[[], [], [], [5], [], [], [], []], 
+	e=[[1], [], [1, 6], [1], [1, 2], [], [], []], 
+	g=[[], [2], [], [], [], [], [], []], 
+	h=[[0], [0, 3], [], [], [], [0], [0], [6]], 
+	i=[[], [1], [], [], [], [], [], [7]], 
+	l=[[2, 3], [], [5], [], [], [2, 3], [], []], 
+	o=[[4], [], [], [], [], [1, 4], [1], [2, 3]], 
+	p=[[], [], [], [], [], [], [], [1]], 
+	r=[[], [], [], [], [], [], [], [4]], 
+	s=[[], [], [0], [0], [0], [], [], [0]], 
+	t=[[], [], [3, 4], [3], [], [], [], [5]], 
+	w=[[], [], [], [], [], [5], [2], []]
+ }
+ 
+I am saving index of each character present in each word.
+Now, for each text passed for search, I am fetching the indexes for each character present in query text and after doing intersection between different words we get the correct index of word. eg.
+
+query text = "se"
+word index that contains s = [2, 3, 4, 7]
+word index that contains e = [0, 2, 3, 4]
+
+now iterate for words that contains first chracter i.e s
+
+word at index 2:
+indexes of s = [0] = [0-0] = [0](subtract the position of character in query text)
+indexes of e = [1] = [1-1] = [0] (subtract the position of character in query text)
+intersection of indexes of s and e = true
+so word to be returned = word in passed array at index 2 = "seattle"
+
+word at index 3:
+indexes of s = [0] = [0-0] = [0] (subtract the position of character in query text)
+indexes of e = [1] = [1-1] = [0] (subtract the position of character in query text)
+intersection of indexes of s and e = true
+so word to be returned = word in passed array at index 3 = "seatac"
+
+word at index 4:
+indexes of s = [0] = [0-0] = [0] (subtract the position of character in query text)
+indexes of e = [1, 2] = [1-1, 2-1] = [0, 1] (subtract the position of character in query text)
+intersection of indexes of s and e = true
+so word to be returned = word in passed array at index 4 = "see"
+
+word at index 7:
+indexes of s = [0] = [0-0] = [0] (subtract the position of character in query text)
+indexes of e = [] = [] = [] (subtract the position of character in query text)
+intersection of indexes of s and e = false
+so word to be returned = word in passed array at index 7 = ""
+
+so returned words are = ("seattle", "seatac", "see")
+
+Why I chose algo with time complexity
+First of all inverted index is much more faster than document vector in retrieving data. Retrieval is easier in inverted index because we maintain the index of all the words in the document. 
+In case of document vector, we have to search the entire document vector each time a search is performed.
+
+Time Complexity to perform search on document vector is m*n where m is length of the longest document and n is the total number of documents.
+Time complexity for trie algo will be M*log N.
+
+While Time Complexity to perform search on inverted index is just 1 since it is a dictionary. But the Time Complexity to build the inverted index is m*n.
+Now, Space Complexity for document vector is m*n. But for inverted index it is k+m*n where k is number of unique words in the document. In the example above k is 11.
